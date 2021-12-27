@@ -83,11 +83,10 @@ function readFileContent(path, fileName) {
     (fileName.indexOf('.js') !== -1 && fileName.indexOf('.json') === -1) ||
     fileName.indexOf('.ts') !== -1
   ) {
-    // 替换年月日
+    // 替换作者
     content = content.replace(/\$author/g, author);
+    // 替换日期
     content = content.replace(/\$date/g, dateFormat(new Date()));
-    // 替换引入
-    content = content.replace(/\$/gi, getName()) + os.EOL;
   } else if (fileName.indexOf('.json') !== -1) {
     content = content.replace(/\$title/g, pageTitle);
   }

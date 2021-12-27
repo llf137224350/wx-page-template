@@ -1,6 +1,6 @@
 {
   "name": "wx-page-template-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "微信小程序页面模板",
   "main": "./src/index.js",
   "bin": {
