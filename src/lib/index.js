@@ -6,18 +6,47 @@
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
+const pathExists = require('path-exists').sync;
 const log = require('./log');
 // 降低允许权限
 require('root-check')();
 // 目标路径 - 执行脚本命令所在目录
 const targetPath = process.cwd();
 // 模板路径
-const sourcePath = path.resolve(__dirname, '../template');
+let sourcePath = path.resolve(__dirname, '../template');
+// 作者
+let author = '';
+// 页面标题
+let pageTitle = '';
+// 页面名称
 const pageName = process.argv.slice(2)[0];
 if (!pageName) {
   log.error('', '请传入页面名称!');
   return;
 }
+
+// 获取package.json文件所在位置
+function getPackageJson() {
+  let dirs = targetPath.replace(/\\/g, '/').split('/');
+  let index = 0;
+  while (index < dirs.length) {
+    if (index === 0) {
+      dirs[index] = '';
+    } else {
+      dirs[index] = dirs[index - 1] + '/' + dirs[index];
+    }
+    index++;
+  }
+  dirs = dirs
+    .map(function (dir) {
+      return dir + '/package.json';
+    })
+    .reverse();
+  return dirs.find(function (filePath) {
+    return pathExists(filePath);
+  });
+}
+
 // 写入文件内容
 function writeContent2File(content, fileName) {
   fileName = pageName + fileName.substring(fileName.indexOf('.'));
@@ -26,6 +55,7 @@ function writeContent2File(content, fileName) {
   // 写入数据到对应文件
   fs.writeFileSync(tempPath, data);
 }
+
 // 首字母大写
 function firstLetterCapitalized(str) {
   if (!str) {
@@ -35,6 +65,7 @@ function firstLetterCapitalized(str) {
   const other = str.slice(1);
   return firstLetter.toUpperCase() + other;
 }
+
 // 获取类名
 function getName() {
   const arr = pageName.split('_');
@@ -44,19 +75,25 @@ function getName() {
   });
   return result;
 }
+
 // 读取文件内容
 function readFileContent(path, fileName) {
   let content = fs.readFileSync(path).toString();
-  if (fileName.indexOf('.js') !== -1 && fileName.indexOf('.json') === -1) {
+  if (
+    (fileName.indexOf('.js') !== -1 && fileName.indexOf('.json') === -1) ||
+    fileName.indexOf('.ts') !== -1
+  ) {
+    // 替换年月日
+    content = content.replace(/\$author/g, author);
+    content = content.replace(/\$date/g, dateFormat(new Date()));
     // 替换引入
     content = content.replace(/\$/gi, getName()) + os.EOL;
-    // 替换年月日
-    content = setDate(content);
-    writeContent2File(content.replace(os.EOL, ''), fileName);
-  } else {
-    writeContent2File(content, fileName);
+  } else if (fileName.indexOf('.json') !== -1) {
+    content = content.replace(/\$title/g, pageTitle);
   }
+  writeContent2File(content, fileName);
 }
+
 // 日期格式化
 function dateFormat(date, fmt = 'yyyy-MM-dd hh:mm:ss') {
   const o = {
@@ -85,10 +122,6 @@ function dateFormat(date, fmt = 'yyyy-MM-dd hh:mm:ss') {
     }
   }
   return fmt;
-}
-// 设置日期
-function setDate(content) {
-  return content.replace(/date/g, dateFormat(new Date()));
 }
 
 // 读取目录下所有文件
@@ -132,4 +165,29 @@ function makeSourceDir() {
   );
 }
 
+// 获取package.json文件，判断是否配置了pageTemplateDir
+const packageJsonPath = getPackageJson();
+if (packageJsonPath) {
+  const package = require(packageJsonPath);
+  if (package && package.pageTemplateConfig) {
+    // 配置了路径
+    if (
+      package.pageTemplateConfig.pageTemplateDir &&
+      !pathExists(package.pageTemplateConfig.pageTemplateDir)
+    ) {
+      log.error('', '配置的pageTemplateDir目录不存在，请检查!');
+      return;
+    } else {
+      // 作者
+      author = package.pageTemplateConfig.author || package.author || '';
+      pageTitle = package.pageTemplateConfig.pageTitle || '';
+      // 配置了模板路径
+      if (package.pageTemplateConfig.pageTemplateDir) {
+        sourcePath = package.pageTemplateConfig.pageTemplateDir;
+      }
+    }
+  } else {
+    author = package.author || '';
+  }
+}
 makeSourceDir();
