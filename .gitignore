@@ -1,0 +1,10 @@
+node_modules
+.idea
+.vscode
+.DS_Store
+*/.DS_Store
+src/template/*.js
+src/template/*.wxss
+yarn.lock
+yarn-error.log
+package-lock.json

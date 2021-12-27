@@ -1,0 +1,32 @@
+{
+  "name": "wx-page-template-js",
+  "version": "1.0.0",
+  "description": "微信小程序页面模板",
+  "main": "./src/index.js",
+  "bin": {
+    "page": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "微信小程序",
+    "页面模板"
+  ],
+  "author": "い 狂奔的蜗牛",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llf137224350/wx-page-template-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/llf137224350/wx-page-template-js/issues"
+  },
+  "homepage": "https://github.com/llf137224350/wx-page-template-js#readme",
+  "dependencies": {
+    "import-local": "^3.0.3",
+    "npmlog": "4",
+    "path-exists": "4",
+    "root-check": "1.0.0"
+  }
+}
