@@ -47,7 +47,7 @@ function getName() {
 // 读取文件内容
 function readFileContent(path, fileName) {
   let content = fs.readFileSync(path).toString();
-  if (fileName.indexOf('.js') !== -1) {
+  if (fileName.indexOf('.js') !== -1 && fileName.indexOf('.json') === -1) {
     // 替换引入
     content = content.replace(/\$/gi, getName()) + os.EOL;
     // 替换年月日
