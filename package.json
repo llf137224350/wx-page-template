@@ -28,5 +28,10 @@
     "npmlog": "4",
     "path-exists": "4",
     "root-check": "1.0.0"
+  },
+  "pageTemplateConfig": {
+    "author": "い 狂奔的蜗牛",
+    "pageTitle": "标题",
+    "pageTemplateDir": ""
   }
 }
