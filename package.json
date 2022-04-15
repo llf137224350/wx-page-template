@@ -1,6 +1,6 @@
 {
   "name": "wx-page-template-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "微信小程序页面模板",
   "main": "./src/index.js",
   "bin": {
@@ -27,7 +27,9 @@
     "import-local": "^3.0.3",
     "npmlog": "4",
     "path-exists": "4",
-    "root-check": "1.0.0"
+    "root-check": "1.0.0",
+    "wx-component-template-js": "1.0.5",
+    "wx-page-template-js": "1.0.4"
   },
   "pageTemplateConfig": {
     "author": "い 狂奔的蜗牛",

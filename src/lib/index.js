@@ -87,6 +87,7 @@ function readFileContent(path, fileName) {
     content = content.replace(/\$author/g, author);
     // 替换日期
     content = content.replace(/\$date/g, dateFormat(new Date()));
+    content = content.replace(/\$/gi, getName());
   } else if (fileName.indexOf('.json') !== -1) {
     content = content.replace(/\$title/g, pageTitle);
   }
