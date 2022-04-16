@@ -1,6 +1,6 @@
 {
-  "name": "wx-page-template-js",
-  "version": "1.0.4",
+  "name": "wx-page-template",
+  "version": "1.0.8",
   "description": "微信小程序页面模板",
   "main": "./src/index.js",
   "bin": {
@@ -11,29 +11,27 @@
   },
   "keywords": [
     "微信小程序",
-    "页面模板"
+    "页面模板",
+    "mini-core"
   ],
   "author": "い 狂奔的蜗牛",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/llf137224350/wx-page-template-js.git"
+    "url": "git+https://github.com/llf137224350/wx-page-template.git"
   },
   "bugs": {
-    "url": "https://github.com/llf137224350/wx-page-template-js/issues"
+    "url": "https://github.com/llf137224350/wx-page-template/issues"
   },
-  "homepage": "https://github.com/llf137224350/wx-page-template-js#readme",
+  "homepage": "https://github.com/llf137224350/wx-page-template#readme",
   "dependencies": {
     "import-local": "^3.0.3",
     "npmlog": "4",
     "path-exists": "4",
-    "root-check": "1.0.0",
-    "wx-component-template-js": "1.0.5",
-    "wx-page-template-js": "1.0.4"
+    "root-check": "1.0.0"
   },
-  "pageTemplateConfig": {
-    "author": "い 狂奔的蜗牛",
-    "pageTitle": "标题",
-    "pageTemplateDir": ""
+  "projectConfig": {
+    "title": "标题",
+    "author": "い 狂奔的蜗牛"
   }
 }

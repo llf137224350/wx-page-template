@@ -87,7 +87,10 @@ function readFileContent(path, fileName) {
     content = content.replace(/\$author/g, author);
     // 替换日期
     content = content.replace(/\$date/g, dateFormat(new Date()));
-    content = content.replace(/\$/gi, getName());
+    // 如果是TS尝试替换类名
+    if (fileName.indexOf('.ts') !== -1) {
+      content = content.replace(/class\s+\$/i, 'class ' + getName());
+    }
   } else if (fileName.indexOf('.json') !== -1) {
     content = content.replace(/\$title/g, pageTitle);
   }
